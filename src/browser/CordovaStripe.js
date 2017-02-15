@@ -1,18 +1,16 @@
 // injects Stripe.js into the browser
-var secureStripeScript = document.createElement('script');
-secureStripeScript.setAttribute('src','https://js.stripe.com/v2/');
-document.getElementsByTagName('head')[0].appendChild(secureStripeScript);
+(function() {
+    var s = document.createElement('script');
+    s.src = 'https://js.stripe.com/v2/';
+    s.type = 'text/javascript';
+    s.async = true;
+    s.onload = function() {
+        Stripe.setPublishableKey("PUBLISHABLE_KEY");
+    };
+    document.getElementsByTagName('head')[0].appendChild(s);
+})();
 
 module.exports = {
-
-    setPublishableKey: function(key, successCallback, errorCallback){
-        try {
-            Stripe.setPublishableKey(key);
-            successCallback();
-        } catch (error) {
-            errorCallback(error);
-        }
-    },
 
     createCardToken: function(cardObject, successCallback, errorCallback){
         try {

@@ -3,16 +3,11 @@
 
 @implementation CordovaStripe
 
-- (void)setPublishableKey:(CDVInvokedUrlCommand*)command
-{
-    
-    NSString* publishableKey = [[command arguments] objectAtIndex:0];
+- (void)pluginInitialize {
+    NSString* publishableKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"StripePublishableKey"];
+
     NSLog(@"Setting publishable key to %@", publishableKey);
     [[STPPaymentConfiguration sharedConfiguration] setPublishableKey:publishableKey];
-    CDVPluginResult* result = [CDVPluginResult
-                               resultWithStatus: CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-    
 }
 
 - (void)createCardToken:(CDVInvokedUrlCommand *)command

@@ -1,6 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <plugin id="cordova-plugin-stripe" version="1.0.2" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>cordova-plugin-stripe</name>
+
+    <preference name="PUBLISHABLE_KEY" />
+
     <js-module name="stripe" src="www/CordovaStripe.js">
         <clobbers target="cordova.plugins.stripe" />
     </js-module>
@@ -32,6 +35,10 @@
 
         <framework src="src/ios/Stripe.framework" custom="true" />
 
+        <config-file target="*-Info.plist" parent="StripePublishableKey">
+            <string>$PUBLISHABLE_KEY</string>
+        </config-file>
+
     </platform>
 
     <platform name="browser">
@@ -47,5 +54,8 @@
         </js-module>
 
     </platform>
+
+    <!-- after_prepare hook to populate PUBLISHABLE_KEY -->
+    <hook type="after_prepare" src="scripts/after_prepare.js" />
 
 </plugin>
